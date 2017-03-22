@@ -4,13 +4,13 @@ import java.util.HashMap;
 
 public class KNrstNghbrAlgrthm {
 
-	private final int K = 5; //because 3 is the number of different labels.
+	private final static int K = 5; //because 3 is the number of different labels.
 	
-	public void findLabels(InstanceSet testSet, InstanceSet trainingSet){
+	public static void findLabels(InstanceSet testSet, InstanceSet trainingSet){
 		
 		for(Vector v : testSet.getInstances()){ 
 			String foundLabel = findLabel(v,  trainingSet); // For each instance in the test set, find its label.
-			//TODO
+			v.setClassifier(foundLabel);
 		}		
 	}
 
@@ -18,14 +18,14 @@ public class KNrstNghbrAlgrthm {
 	 * Determines the label of a test instance by finding the K nearest
 	 * neighbours and using their labels to determine a majority neighbour.
 	 */
-	public String findLabel(Vector test, InstanceSet trainingSet){
+	public static String findLabel(Vector test, InstanceSet trainingSet){
 		
 		HashMap<Vector, Double> leaderboard = new HashMap<Vector, Double>(); //the current nearest neighbours.		
 		double[] ranges = Calculator.getRanges(trainingSet.getInstances());
 		
 		for(Vector trainer: trainingSet.getInstances()){ //for each Vector in the training set find how close it is and update the leaderboard.
 			double distance = Calculator.getDistance(test, trainer, ranges);
-			if(leaderboard.size()<K){ 				//if nearest neigbours number less than K
+			if(leaderboard.size()<K){ 				//if nearest neighbours number less than K
 				leaderboard.put(trainer, distance);	//simply add the new value to nearest neighbours
 			}else{
 				updateLeaderboard(trainer, distance, leaderboard); //otherwise check to see that it is nearer than the current nearest neighbours
@@ -38,7 +38,7 @@ public class KNrstNghbrAlgrthm {
 	/**
 	 * Updates a map of the nearest neighbours. 
 	 */
-	public void updateLeaderboard(Vector contender, double score, HashMap<Vector, Double> leaderboard){
+	public static void updateLeaderboard(Vector contender, double score, HashMap<Vector, Double> leaderboard){
 		
 		Vector demoted = contender;
 		double worst = score;				//the contender starts as the worst score
@@ -61,7 +61,7 @@ public class KNrstNghbrAlgrthm {
 	/**
 	 * Counts each different label present in the nearest neighbours to determine the classification of the instance.
 	 */
-	public String countNearbyLabels(HashMap<Vector, Double> neighbours){
+	public static String countNearbyLabels(HashMap<Vector, Double> neighbours){
 		//TODO
 		
 		return null;

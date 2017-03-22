@@ -11,11 +11,10 @@ public class Main {
 		InstanceSet trainingSet = new InstanceSet();
 		InstanceSet testSet = new InstanceSet();
 		
-		Double D = 10.0;
-		double d = 9.0;
-		if(d<D){
-			System.out.println("hi");
-		}
+		testSet.printAllVectors(testSet.getInstances()); 
+		KNrstNghbrAlgrthm.findLabels(testSet, trainingSet);
+		testSet.printAllVectors(testSet.getInstances()); 
+		
 	}
 
 }

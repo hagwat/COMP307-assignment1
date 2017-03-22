@@ -8,7 +8,7 @@ public class Vector {
 
 	private final double[] features;
 	private String actualLabel;
-	private String classifiedLabel = null; //The label we will be generating with the k nearest neighbours algorithm.
+	private String classifiedLabel = "not classified yet"; //The label we will be generating with the k nearest neighbours algorithm.
 	
 	public Vector(double feature1, double feature2, double feature3, double feature4, String label){
 		this.features = new double[]{ feature1, feature2, feature3, feature4 };		
@@ -16,7 +16,11 @@ public class Vector {
 	}
 
 	public void print(){
-		System.out.println(features[0]+", "+features[1]+", "+features[2]+", "+features[3]+", "+actualLabel);
+		System.out.println(features[0]+", "+features[1]+", "+features[2]+", "+features[3]+", "+actualLabel+", "+classifiedLabel);
+	}
+	
+	public void setClassifier(String label){
+		this.classifiedLabel = label;
 	}
 	
 	/**
