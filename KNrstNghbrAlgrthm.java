@@ -27,10 +27,10 @@ public class KNrstNghbrAlgrthm {
 			double distance = Calculator.getDistance(test, trainer, ranges);
 			if(leaderboard.size()<K){ 				//if nearest neigbours number less than K
 				leaderboard.put(trainer, distance);	//simply add the new value to nearest neighbours
+			}else{
+				updateLeaderboard(trainer, distance, leaderboard); //otherwise check to see that it is nearer than the current nearest neighbours
 			}
-			updateLeaderboard(trainer, distance, leaderboard); //otherwise check to see that it is nearer than the current nearest neighbours
 		}
-		
 		String label = countNearbyLabels(leaderboard);
 		return label;		
 	}
