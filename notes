@@ -1,0 +1,21 @@
+calculate euclidean distance between 2 vectors
+	requires knowing range of each feature 
+	
+	d = sqrt( sumofeach( (square(Ai) - square(Bi))/square(range of i) ) )
+	
+	
+
+	
+find k nearest neighbours
+	
+	store the k nearest neighbours
+		k will be susceptible to change
+	store the distances of those neighbours
+	
+	for each training vector t
+		if t is closer than any of the current closest
+			it gets stored in the "ranked leaders"
+			perhaps make a method or class that handles this ranking. 
+			method could have an array as a parameter.
+				it would take the contender, its distance from the test vector and k as parameters
+				
