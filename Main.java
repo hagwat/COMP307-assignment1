@@ -11,9 +11,7 @@ public class Main {
 	 * with actual label to find accuracy.
 	 */
 	public static void main(String[] args) {
-				
-		System.out.println(new File(args[0]).getAbsolutePath());
-		
+						
 		InstanceSet trainingSet = new InstanceSet(args[0]);
 		InstanceSet testSet = new InstanceSet(args[1]);
 
