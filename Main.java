@@ -1,5 +1,6 @@
 package knearestneighbours;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Main {
@@ -11,11 +12,13 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 				
-		//InstanceSet trainingSet = new InstanceSet(args[0]); 	TODO
-		//InstanceSet testSet = new InstanceSet(args[1]);
+		System.out.println(new File(args[0]).getAbsolutePath());
+		
+		InstanceSet trainingSet = new InstanceSet(args[0]);
+		InstanceSet testSet = new InstanceSet(args[1]);
 
-		InstanceSet trainingSet = new InstanceSet(null);
-		InstanceSet testSet = new InstanceSet(null);
+		//InstanceSet trainingSet = new InstanceSet(null);
+		//InstanceSet testSet = new InstanceSet(null);
 		
 		int K = 5;		
 		System.out.print("Choose a value for K:");
