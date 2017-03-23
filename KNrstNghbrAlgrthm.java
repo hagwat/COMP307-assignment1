@@ -4,8 +4,7 @@ import java.util.HashMap;
 
 public class KNrstNghbrAlgrthm {
 
-	private final static int K = 5; //because 3 is the number of different labels.
-	
+	private final static int K = 5; //K needs to be chosen during runtime	
 	public static void findLabels(InstanceSet testSet, InstanceSet trainingSet){
 		
 		for(Vector v : testSet.getInstances()){ 
@@ -25,6 +24,7 @@ public class KNrstNghbrAlgrthm {
 		
 		for(Vector trainer: trainingSet.getInstances()){ //for each Vector in the training set find how close it is and update the leaderboard.
 			double distance = Calculator.getDistance(test, trainer, ranges);
+			
 			if(leaderboard.size()<K){ 				//if nearest neighbours number less than K
 				leaderboard.put(trainer, distance);	//simply add the new value to nearest neighbours
 			}else{

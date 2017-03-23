@@ -13,30 +13,35 @@ import javax.swing.JFileChooser;
  */
 public class InstanceSet {
 
-	private List<Vector> instances = new ArrayList<Vector>(); //make private maybe
-	private String filepath = "C:\\Users\\Hagwat\\workspace2\\COMP307-assignment1\\ass1-data\\part1";//needs to be more general
+	private List<Vector> instances = new ArrayList<Vector>();
+	private String filepath = "C:\\Users\\Hagwat\\workspace2\\COMP307-assignment1\\ass1-data\\part1";//needs to be more general...probably delete it by the end.
 		
-	public InstanceSet(){
+	public InstanceSet(String filename){
 		
-		loadInstanceSet();
+		System.out.println(new File(".").getAbsoluteFile());
+		System.out.println(new File(filename).getAbsolutePath());
 		
-		//double[] ranges = Calculator.getRanges(instances); //might have to make getRanges take a whole InstanceSet.
-		//printAllVectors(instances);
-		//System.out.println("Range: "+ranges[0]+", "+ranges[1]+", "+ranges[2]+", "+ranges[3]);
-		}
+		loadInstanceSet(filename);
+		
+	}
 	
 	/**
 	 * Populates the instance set.
 	 */
-	public void loadInstanceSet(){
+	public void loadInstanceSet(String filename){			
+		File f;
 		try{
-			File f = readFile();
-
+			if(filename == null){
+				f = readFile();
+			}else{
+				f = new File(filename);
+			}
+			
 			Scanner sc = new Scanner(f);			
 			while(sc.hasNext()){				
 				instances.add(new Vector(sc.nextDouble(), sc.nextDouble(), sc.nextDouble(), sc.nextDouble(), sc.next()));
 			}
-
+			sc.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}

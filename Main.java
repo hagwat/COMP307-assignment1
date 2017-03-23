@@ -8,13 +8,16 @@ public class Main {
 	 * with actual label to find accuracy.
 	 */
 	public static void main(String[] args) {
-		InstanceSet trainingSet = new InstanceSet();
-		InstanceSet testSet = new InstanceSet();
 		
-		testSet.printAllVectors(testSet.getInstances()); 
+		
+		
+		InstanceSet trainingSet = new InstanceSet(args[0]);
+		InstanceSet testSet = new InstanceSet(args[1]);
+
+		testSet.printAllVectors(testSet.getInstances());
 		KNrstNghbrAlgrthm.findLabels(testSet, trainingSet);
-		testSet.printAllVectors(testSet.getInstances()); 
-		
+		testSet.printAllVectors(testSet.getInstances());
+
 	}
 
 }

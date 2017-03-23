@@ -12,14 +12,25 @@ import java.util.List;
 public class Calculator {
 	
 	/**
-	 * Returns the Euclidean distance between two vectors.
+	 * Returns the normalized Euclidean distance between two vectors.
 	 * @param v1
 	 * @param v2
 	 * @param ranges
 	 */
 	public static double getDistance(Vector v1, Vector v2, double[] ranges){
-		//TODO
-		return 0;
+
+		double[] ftrs1 = v1.getFeatures();
+		double[] ftrs2 = v2.getFeatures();
+		double sumOfSquares = 0;
+
+		//sum the squares of the differences between vector components divided by range of vector components.
+		for(int i = 0; i < ftrs1.length; i++){
+			double Di = ftrs1[i]-ftrs2[i];
+			double Ri = ranges[i];			
+			sumOfSquares += (Di*Di)/(Ri*Ri);
+		}
+		
+		return Math.sqrt(sumOfSquares);		
 	}
 		
 	/**
