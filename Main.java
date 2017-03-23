@@ -17,19 +17,18 @@ public class Main {
 		InstanceSet trainingSet = new InstanceSet(null);
 		InstanceSet testSet = new InstanceSet(null);
 		
-		int K = 5;
-		
+		int K = 5;		
 		System.out.print("Choose a value for K:");
+		
 		try {
 			K = System.in.read();
+			System.out.println();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println();
 		
 		KNrstNghbrAlgrthm.findLabels(testSet, trainingSet, K);
 		testSet.printAllVectors(testSet.getInstances());
-
 	}
 
 }
