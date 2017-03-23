@@ -18,8 +18,8 @@ public class InstanceSet {
 		
 	public InstanceSet(String filename){
 		
-		System.out.println(new File(".").getAbsoluteFile());
-		System.out.println(new File(filename).getAbsolutePath());
+		//System.out.println(new File(".").getAbsoluteFile());
+		//System.out.println(new File(filename).getAbsolutePath());
 		
 		loadInstanceSet(filename);
 		

@@ -1,5 +1,7 @@
 package knearestneighbours;
 
+import java.io.IOException;
+
 public class Main {
 
 	/**
@@ -8,14 +10,24 @@ public class Main {
 	 * with actual label to find accuracy.
 	 */
 	public static void main(String[] args) {
-		
-		
-		
-		InstanceSet trainingSet = new InstanceSet(args[0]);
-		InstanceSet testSet = new InstanceSet(args[1]);
+				
+		//InstanceSet trainingSet = new InstanceSet(args[0]); 	TODO
+		//InstanceSet testSet = new InstanceSet(args[1]);
 
-		testSet.printAllVectors(testSet.getInstances());
-		KNrstNghbrAlgrthm.findLabels(testSet, trainingSet);
+		InstanceSet trainingSet = new InstanceSet(null);
+		InstanceSet testSet = new InstanceSet(null);
+		
+		int K = 5;
+		
+		System.out.print("Choose a value for K:");
+		try {
+			K = System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println();
+		
+		KNrstNghbrAlgrthm.findLabels(testSet, trainingSet, K);
 		testSet.printAllVectors(testSet.getInstances());
 
 	}

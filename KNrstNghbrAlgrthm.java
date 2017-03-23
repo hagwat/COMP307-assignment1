@@ -1,14 +1,13 @@
 package knearestneighbours;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class KNrstNghbrAlgrthm {
 
-	private final static int K = 5; //K needs to be chosen during runtime	
-	public static void findLabels(InstanceSet testSet, InstanceSet trainingSet){
+	public static void findLabels(InstanceSet testSet, InstanceSet trainingSet, int K){
 		
 		for(Vector v : testSet.getInstances()){ 
-			String foundLabel = findLabel(v,  trainingSet); // For each instance in the test set, find its label.
+			String foundLabel = findLabel(v,  trainingSet, K); // For each instance in the test set, find its label.
 			v.setClassifier(foundLabel);
 		}		
 	}
@@ -17,7 +16,7 @@ public class KNrstNghbrAlgrthm {
 	 * Determines the label of a test instance by finding the K nearest
 	 * neighbours and using their labels to determine a majority neighbour.
 	 */
-	public static String findLabel(Vector test, InstanceSet trainingSet){
+	public static String findLabel(Vector test, InstanceSet trainingSet, int K){
 		
 		HashMap<Vector, Double> leaderboard = new HashMap<Vector, Double>(); //the current nearest neighbours.		
 		double[] ranges = Calculator.getRanges(trainingSet.getInstances());
@@ -62,9 +61,30 @@ public class KNrstNghbrAlgrthm {
 	 * Counts each different label present in the nearest neighbours to determine the classification of the instance.
 	 */
 	public static String countNearbyLabels(HashMap<Vector, Double> neighbours){
-		//TODO
 		
-		return null;
+		Map<String, Integer> labels = new HashMap<String, Integer>();
+		
+		for(Vector v : neighbours.keySet()){
+			String label = v.getActualLabel();
+			if(!labels.containsKey(label)){				//If no example of the label has been counted yet
+				labels.put(label, 1);					//Record it and set the count to 1
+			}else{		
+				Integer count = labels.get(label) + 1;	//Get the count and increment it
+				labels.put(label, count);				
+			}
+		}
+		
+		String contender = null;
+		Integer score = 0;
+		
+		for(String label : labels.keySet()){
+			if(labels.get(label) > score){
+				contender = label;
+				score = labels.get(label);
+			}
+		}
+		
+		return contender;
 	}
 	
 }
