@@ -1,0 +1,56 @@
+load in instances into a set
+
+
+arbitrarily to begin with
+	separate instances into true and false based on an arbitrary attribute (the first)
+		later we will use the concept of purity to find which is the best attribute to use
+now have 2 branches
+	for each branch build a tree same as above except lacking the first attribute
+
+
+look at each attribute
+to do this add each attribute to the fringe for this tier
+
+	if attribute has best purity (can do randomly just for starters)
+
+node
+attributesremaining
+instancesinfringe
+2 child nodes = null
+
+purestattr
+purity = lowestnumber
+
+for each remaining attr
+	calculatepurity(attribute, instances in fringe)
+	is it lower than current best
+
+splitbyattr(puresattr,instancesinfringe, attributes - puresattr)
+
+	collect instances who are true for purestattr
+	collect instances who are false for purestattr
+
+	leftchild = makechildnode(true, instances who are true for purestattr, attributes - puresattr)
+	rightchild = makechildnode(false, instances who are false for purestattr, attributes - puresattr)
+
+
+
+impurity = m*n/((m+n)(m+n))
+
+calculatepurity(attr)
+
+	calculate the purity of attribute when true
+	calculate the purity of attribute when false
+	return the average
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
