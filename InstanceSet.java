@@ -14,7 +14,7 @@ import javax.swing.JFileChooser;
 public class InstanceSet {
 
 	private List<Vector> instances = new ArrayList<Vector>();
-	private String filepath = "C:\\Users\\Hagwat\\workspace2\\COMP307-assignment1\\ass1-data\\part1";//needs to be more general...probably delete it by the end.
+	//private String filepath = "C:\\Users\\Hagwat\\workspace2\\COMP307-assignment1\\ass1-data\\part1";//needs to be more general...probably delete it by the end.
 		
 	public InstanceSet(String filename){
 		
@@ -52,7 +52,7 @@ public class InstanceSet {
 	 */
 	public File readFile() throws Exception{
 		File file = null;		
-		final JFileChooser fc = new JFileChooser(filepath);
+		final JFileChooser fc = new JFileChooser();
 		int result = fc.showOpenDialog(null);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			file = fc.getSelectedFile();
@@ -74,6 +74,23 @@ public class InstanceSet {
 	 */
 	public List<Vector> getInstances(){
 		return instances;
-	}	
+	}
+	
+	public void countCorrect(){
+		int totalNum = 0;
+		int numCorrect = 0;
+		
+		for(Vector v : instances){
+			totalNum++;
+			if(v.getActualLabel().equals(v.getClassifier())){
+				numCorrect++;			
+			}
+		}
+		double percentageCorrect = (double)numCorrect/totalNum;
+		
+		System.out.println("Total instances: "+ totalNum);
+		System.out.println("Number correct: "+ numCorrect);
+		System.out.println("Percentage correct: "+ percentageCorrect*100 +"%");		
+	}
 	
 }

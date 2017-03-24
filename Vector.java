@@ -27,6 +27,10 @@ public class Vector {
 		return this.actualLabel;
 	}
 	
+	public String getClassifier(){
+		return this.classifiedLabel;
+	}
+	
 	/**
 	 * Returns number of features in vector. If for any reason vectors have variable numbers of features, this 
 	 * method will actually be useful, but most methods that make use of it will need a drastic rethink.	
