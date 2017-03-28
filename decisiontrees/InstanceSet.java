@@ -10,11 +10,10 @@ public class InstanceSet {
 	private String[] outcomes = new String[2];
 	private String[] attributes;
 	private List<Instance> instances = new ArrayList<Instance>();
-	private DecisionTree tree;
+
 
 	public InstanceSet(String filename){
 		loadInstanceSet(filename);
-		tree = new DecisionTree(outcomes, attributes, instances);
 	}
 
 	/**
@@ -33,15 +32,15 @@ public class InstanceSet {
 			Scanner sc = new Scanner(f);
 
 			outcomes[0] = sc.next(); outcomes[1] = sc.next();
-						
-			ArrayList<String> tempList = new ArrayList<String>(); 
-			while(!(sc.hasNext(outcomes[0])||sc.hasNext(outcomes[1]))){	//while the next token is not an outcome	
+
+			ArrayList<String> tempList = new ArrayList<String>();
+			while(!(sc.hasNext(outcomes[0])||sc.hasNext(outcomes[1]))){	//while the next token is not an outcome
 				tempList.add(sc.next());
-			}			
+			}
 			attributes = tempList.toArray(new String[tempList.size()]);	//converts the arraylist to an array
-						
+
 			while(sc.hasNext()){										//for each remaining line
-				String outcome = sc.next();		
+				String outcome = sc.next();
 				boolean[] attrVals = new boolean[attributes.length];
 				for(int i = 0; i < attrVals.length; i++){				//for each attribute
 					if(sc.hasNext("true")){
@@ -52,32 +51,32 @@ public class InstanceSet {
 						sc.next();
 					}else{
 						throw new Exception("Scanning Error");
-					}						
+					}
 				}
-				
+
 				Instance newInst = new Instance(outcome, attrVals);
 				instances.add(newInst);
-			}			
+			}
 
 			sc.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void printInstanceSet(){
-		
+
 		System.out.println(outcomes[0]+" "+outcomes[1]);
-		
+
 		for(int i = 0; i < attributes.length; i++){
 			System.out.print(attributes[i]+" ");
 		}
 		System.out.println();
-		
+
 		for(Instance inst : instances){
 			inst.print();
 		}
-		
+
 	}
 
 	/**
@@ -95,5 +94,15 @@ public class InstanceSet {
 		return file;
 	}
 
+	public String[] getOutcomes(){
+		return this.outcomes;
+	}
 
+	public String[] getAttributes(){
+		return this.attributes;
+	}
+
+	public List<Instance> getInstances(){
+		return this.instances;
+	}
 }

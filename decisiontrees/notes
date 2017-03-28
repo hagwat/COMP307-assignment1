@@ -25,6 +25,15 @@ for each remaining attr
 	calculatepurity(attribute, instances in fringe)
 	is it lower than current best
 
+impurity = m*n/((m+n)(m+n))
+
+calculatepurity(attr)
+
+	calculate the purity of attribute when true
+	calculate the purity of attribute when false
+	return the average
+	
+
 splitbyattr(puresattr,instancesinfringe, attributes - puresattr)
 
 	collect instances who are true for purestattr
@@ -34,17 +43,14 @@ splitbyattr(puresattr,instancesinfringe, attributes - puresattr)
 	rightchild = makechildnode(false, instances who are false for purestattr, attributes - puresattr)
 
 
+Decision tree must traverse tree
 
-impurity = m*n/((m+n)(m+n))
+method to print defining attribute of node
+then method to get each child
+	then call print on them, decision tree knows indent, node knows attribute, node knows children, node knows probability if leaf
+if no children, display probability.
 
-calculatepurity(attr)
 
-	calculate the purity of attribute when true
-	calculate the purity of attribute when false
-	return the average
-	
-	
-	
 	
 	
 	
