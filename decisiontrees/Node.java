@@ -138,17 +138,17 @@ public class Node {
 		double n = attrTrueOutcome2;
 		double impurityForTrue = (m*n)/((m+n)*(m+n));
 
-		System.out.print("(Im)purity for true: "+(int)m+"/"+(int)(m+n)+" "+impurityForTrue+" ");
+		//System.out.print("(Im)purity for true: "+(int)m+"/"+(int)(m+n)+" "+impurityForTrue+" ");
 
 		double o = attrFalseOutcome1;
 		double p = attrFalseOutcome2;
 		double impurityForFalse = (o*p)/((o+p)*(o+p));
 
-		System.out.print("(Im)purity for false: "+(int)o+"/"+(int)(o+p)+" "+impurityForFalse+" ");
+		//System.out.print("(Im)purity for false: "+(int)o+"/"+(int)(o+p)+" "+impurityForFalse+" ");
 
 		double averageImpurity = (impurityForTrue + impurityForFalse)/2;
 
-		System.out.println(attribute+" Average impurity: "+averageImpurity);
+		//System.out.println(attribute+" Average impurity: "+averageImpurity);
 
 		return averageImpurity;
 	}
@@ -183,7 +183,7 @@ public class Node {
 		if(probability!=1.0&&probability!=0.0){
 			System.out.println("impure");
 		}
-		System.out.println("Outcomes are "+count1+" to "+count2+", probability is "+probability);
+		//System.out.println("Outcomes are "+count1+" to "+count2+", probability is "+probability);
 		return probability;
 	}
 
@@ -227,7 +227,7 @@ public class Node {
 			}
 		}
 		if(count1==0||count2==0){
-			System.out.println(attribute+" Used");
+			//System.out.println(attribute+" Used");
 			return true;
 		}
 		return false;
@@ -249,7 +249,7 @@ public class Node {
 				System.out.print("\t"); //Tab as many times as indent+1
 			}
 			String classifier;
-			double printedProb;
+			double printedProb;	//The probability of the printed class happening. Therefore printedprob is never less than 0.5. Printedprob currently retired.
 			if(probability>=0.5){
 				classifier = outcomes[0];
 				printedProb = probability;
@@ -258,13 +258,33 @@ public class Node {
 				printedProb = 1 - probability;
 			}
 
-			System.out.println("Class "+classifier+", prob = "+printedProb);
+			System.out.println("Class "+classifier+", num instances = "+instances.size()+", prob = "+probability);
 		}
 
 	}
 
+	/**
+	 * Returns the attributes that have already been decided before this node.
+	 */
+	public boolean[] getUsedAttrs(){
+		boolean[] usedArray = new boolean[attributes.length];
+		for(int i = 0; i< attributes.length;i++){
+			if(used(attributes[i])){
+				usedArray[i] = true;
+			}else{
+				usedArray[i] = false;
+			}
+		}
+		return usedArray;
+	}
+
+
 	public int getNodeType(){
 		return nodeType;
+	}
+
+	public int definingAttributeIndex(){
+		return getAttrIndex(definingAttribute);
 	}
 
 }

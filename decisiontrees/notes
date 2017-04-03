@@ -1,62 +1,22 @@
-load in instances into a set
+Testing
 
 
-arbitrarily to begin with
-	separate instances into true and false based on an arbitrary attribute (the first)
-		later we will use the concept of purity to find which is the best attribute to use
-now have 2 branches
-	for each branch build a tree same as above except lacking the first attribute
-
-
-look at each attribute
-to do this add each attribute to the fringe for this tier
-
-	if attribute has best purity (can do randomly just for starters)
-
-node
-attributesremaining
-instancesinfringe
-2 child nodes = null
-
-purestattr
-purity = lowestnumber
-
-for each remaining attr
-	calculatepurity(attribute, instances in fringe)
-	is it lower than current best
-
-impurity = m*n/((m+n)(m+n))
-
-calculatepurity(attr)
-
-	calculate the purity of attribute when true
-	calculate the purity of attribute when false
-	return the average
+	Construct an additional instance set which will test the predictive ability of the tree by traversing it and predicting
 	
-
-splitbyattr(puresattr,instancesinfringe, attributes - puresattr)
-
-	collect instances who are true for purestattr
-	collect instances who are false for purestattr
-
-	leftchild = makechildnode(true, instances who are true for purestattr, attributes - puresattr)
-	rightchild = makechildnode(false, instances who are false for purestattr, attributes - puresattr)
-
-
-Decision tree must traverse tree
-
-method to print defining attribute of node
-then method to get each child
-	then call print on them, decision tree knows indent, node knows attribute, node knows children, node knows probability if leaf
-if no children, display probability.
-
-
+	each leaf node is a classifier?
+	
+	accuracy is calculated by comparing the proportion of outcomes of a given traveral combo with the proportion predicted.
 	
 	
-	
-	
+Make a collection of objects that hold instances that all have the same attributes.
+
+To traverse down the tree to find probability 
+	check if node is leaf, or empty
+	get the defining attribute of 
 	
 
+Still to do on part 2:
 
+	Split hepatitis.dat 10 different ways and calculate average accuracy
 
 
