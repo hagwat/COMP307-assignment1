@@ -24,41 +24,31 @@ public class Main {
 
 		Perceptron perc = new Perceptron(features, rand);
 
-		epoch(perc, images);	//Do this 1000 times or till convergence
+		epoch(perc, images);	//Todo Do this 1000 times or till convergence
 
 	}
 
 
 	public static void epoch(Perceptron perc, List<Imgc> images){
 
+		for(int i = 0; i<15; i++){
+			int right = 0;
+			int total = 0;
 		for(Imgc image: images){
 			boolean approved = perc.approve(image);
 			if(image.getClass().equals("Yes") == approved){	//If yes and approved or not yes and not approved
-				System.out.println("Correct");
-				image.setCorrect(true);
+				//System.out.println("Correct");
+				right++;
 			}else{
-				System.out.println("Incorrect");
-				image.setCorrect(false);
+				//System.out.println("Incorrect");
 			}
+			total++;
 		}
-
-		/*
-		 * Todo training method on perceptron.
-		 *
-		 * If -ve example and wrong (ie,
-		 * weights on active features are too high) Subtract feature vector from
-		 * weight vector.
-		 *
-		 * If +ve example and wrong (ie, weights on active
-		 * features are too low) Add feature vector to weight vector
-		 *
-		 * What is feature vector???
-		 * When do I change weights? After each image? After each epoch? Once or for each image?
-		 */
-
+		System.out.println(right+"/"+total);
+		
 		perc.train(images);	//Changes weights on perceptron depending on which images perc got right
-
-
+		//Todo do once per epoch
+		}
 
 
 
@@ -77,7 +67,7 @@ public class Main {
 				sc.findWithinHorizon("#",0);
 
 				String cls = sc.next();	//classification
-				System.out.println(cls);
+				//System.out.println(cls);
 
 				int rows = sc.nextInt();
 			    int cols = sc.nextInt();

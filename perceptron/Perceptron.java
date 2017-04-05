@@ -6,6 +6,8 @@ public class Perceptron {
 
 	Feature[] features;
 	float[] weights;
+	float learnRate = 0.15f;
+	float threshold = -10;
 
 	public Perceptron(Feature[] features, Random rand){
 		this.features = features;
@@ -13,11 +15,10 @@ public class Perceptron {
 	}
 
 	/**
-	 * Returns true iff the sum of weights x outputs plus the threshold which is a negative number is >= than 0.
+	 * Returns true iff the sum of weights x outputs plus the threshold which is a negative number is >= 0.
 	 */
 	public boolean approve(Imgc image){
 		float sum = 0;
-		float threshold = -10; //Todo find out how big threshold will be
 
 		for(int i = 0; i< features.length; i++){
 			if(features[i].approve(image)){
@@ -44,29 +45,26 @@ public class Perceptron {
 	public void train(List<Imgc> images){
 
 		for(Imgc img:images){
-			for(Feature ft :features){
-				if(img.getClassification().equals("Yes") != ft.approve(img)){	//If yes and approved or not yes and not approved
-					//Change weight
-					//May have to change differently if negative change Todo
-
-
-
+			boolean classify = approve(img);
+			if(classify==false && img.getClassification().equals("Yes")){	//Positive example and wrong
+				for(int i = 0; i<features.length; i++){
+					if(features[i].approve(img)){	//Active feature								
+						weights[i]+=learnRate;
+					}
 				}
-
-
-
-
-			}
+				//Change threshold
+				threshold+=learnRate;//Todo Try disabling threshold change
+				
+			}else if(classify==true && !img.getClassification().equals("Yes")){	//Negative example and wrong
+				for(int i = 0; i<features.length; i++){
+					if(features[i].approve(img)){	//Active feature						
+						weights[i]-=learnRate;
+					}
+				}
+				//Change threshold
+				threshold-=learnRate;
+			}			
 		}
-
-
-
-
-
-
-
-
-
 	}
 
 }
