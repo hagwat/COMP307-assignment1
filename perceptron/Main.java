@@ -13,27 +13,37 @@ public class Main {
 	public static final int NUM_FEATURES = 60;
 
 	public static void main(String[] args){
-		List<boolean[][]> images = constructImageArrays(args[0]);	//TODO include image classification. Check what it is that gives an image its classification at home where can view
+		List<Imgc> images = constructImageArrays(args[0]);
 		Feature[] features = new Feature[NUM_FEATURES];
 		Random rand = new Random(666);
 
-
 		for(int i = 0; i < NUM_FEATURES; i++){
-			features[i] = new Feature(images.get(0).length, images.get(0)[0].length, rand);
-		}
-
-		for(Feature f: features){
-			f.print();
+			boolean[][] array = images.get(0).getArray();
+			features[i] = new Feature(array.length, array[0].length, rand);
 		}
 
 		Perceptron perc = new Perceptron(features, rand);
 
-		for(boolean[][] image: images){
-			perc.approve(image);
+		epoch(perc, images);	//Do this 1000 times or till convergence
+
+	}
+
+
+	public static void epoch(Perceptron perc, List<Imgc> images){
+
+		for(Imgc image: images){
+			boolean approved = perc.approve(image);
+			if(image.getClass().equals("Yes") == approved){	//If yes and approved or not yes and not approved
+				System.out.println("Correct");
+				image.setCorrect(true);
+			}else{
+				System.out.println("Incorrect");
+				image.setCorrect(false);
+			}
 		}
 
 		/*
-		 * TODO training method on perceptron.
+		 * Todo training method on perceptron.
 		 *
 		 * If -ve example and wrong (ie,
 		 * weights on active features are too high) Subtract feature vector from
@@ -43,26 +53,35 @@ public class Main {
 		 * features are too low) Add feature vector to weight vector
 		 *
 		 * What is feature vector???
+		 * When do I change weights? After each image? After each epoch? Once or for each image?
 		 */
+
+		perc.train(images);	//Changes weights on perceptron depending on which images perc got right
+
+
+
+
+
+
 	}
 
-
-
-
-	public static List<boolean[][]> constructImageArrays(String filename) {
-		List<boolean[][]> arrays = new ArrayList<boolean[][]>();
+	public static List<Imgc> constructImageArrays(String filename) {
+		List<Imgc> arrays = new ArrayList<Imgc>();
 		try {
 			File f = new File(filename);
 			Scanner sc = new Scanner(f);
-			//sc.useDelimiter("\\s+");
 			java.util.regex.Pattern bit = java.util.regex.Pattern.compile("[01]");
 
 			while(sc.hasNext()){
-				sc.next();//filetype
-				sc.next();//classification
+				sc.next();	//filetype
+				sc.findWithinHorizon("#",0);
+
+				String cls = sc.next();	//classification
+				System.out.println(cls);
 
 				int rows = sc.nextInt();
 			    int cols = sc.nextInt();
+
 			    boolean[][] newimage = new boolean[rows][cols];
 			    for (int r=0; r<rows; r++){
 			    	for (int c=0; c<cols; c++){
@@ -72,13 +91,13 @@ public class Main {
 			    	//System.out.println();
 			    }
 
-			    arrays.add(newimage);
+			    Imgc img = new Imgc(newimage, cls);
+			    arrays.add(img);
 			}
 			sc.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return arrays;
 	}
 

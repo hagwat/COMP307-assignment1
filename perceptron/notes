@@ -1,0 +1,6 @@
+Change weights after each epoch
+	once for each instance
+	change by the feature vector
+		in effect, by 1, 0 or -1 depending on whether too high, correct or too low
+
+Threshold can be chosen arbitrarily and gets changed each epoch in a similar way to normal weights

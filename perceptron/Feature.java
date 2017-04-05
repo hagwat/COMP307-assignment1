@@ -38,13 +38,13 @@ public class Feature {
 	/**
 	 * Returns true if at least 3 of the pixels connected agree with the feature
 	 */
-	public boolean approve(boolean[][] image){
+	public boolean approve(Imgc image){
 		int count = 0;
 		
 		for(int i = 0; i<4 ; i++){
 			int col = pixels[i][0];
 			int row = pixels[i][1];
-			if(image[row][col]==sign[i]){
+			if(image.getArray()[row][col]==sign[i]){
 				count++;
 			}			
 		}
