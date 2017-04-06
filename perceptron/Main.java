@@ -11,50 +11,127 @@ import java.util.*;
 public class Main {
 
 	public static final int NUM_FEATURES = 60;
+	public static final int EPOCHS = 1000;
 
 	public static void main(String[] args){
 		List<Imgc> images = constructImageArrays(args[0]);
 		Feature[] features = new Feature[NUM_FEATURES];
-		Random rand = new Random(666);
+		Random rand = new Random(665);
 
+		//Constructing features
 		for(int i = 0; i < NUM_FEATURES; i++){
 			boolean[][] array = images.get(0).getArray();
 			features[i] = new Feature(array.length, array[0].length, rand);
 		}
 
+		//Perceptron using all images as training set
 		Perceptron perc = new Perceptron(features, rand);
-
-		epoch(perc, images);	//Todo Do this 1000 times or till convergence
-
+		boolean converges = false;
+		for (int i = 0; i < EPOCHS; i++) {
+			if (converges) {
+				perc.printFeatures();
+				System.out.println("Number of epochs: " + (i + 1));
+				break;
+			}
+			converges = epoch(perc, images);
+		}		
+		/*
+		//Cross validation with same features but new perceptron. Test set takes 10% of instances
+		for( int i = 0; i < 5; i++){
+			crossValidate(features, images, rand);
+		}
+		*/
 	}
 
+	/**
+	 * Takes 10% of instances and uses them as a test set. 
+	 * As of now does not take affirmative action to ensure all classes represented.
+	 */
+	public static void crossValidate(Feature[] features, List<Imgc> images, Random rand){
+		Imgc[] allImages = new Imgc[images.size()];
+		images.toArray(allImages);
+		Imgc[] testImages = new Imgc[allImages.length/10];
+		
+		Perceptron perc = new Perceptron(features, rand);
+		
+		
+		for(int i = 0; i < testImages.length; i++){
+			int imgIndex = rand.nextInt(allImages.length);
+			boolean taken = false;
+			for(int j = 0; j < i; j++){
+				if(allImages[imgIndex] == (testImages[j])){
+					taken = true;
+				}
+			}
+			if(taken==false){
+				testImages[i] = allImages[imgIndex];
+			}else{
+				i--;
+			}
+		}		
 
-	public static void epoch(Perceptron perc, List<Imgc> images){
+		List<Imgc> trainingImages = new ArrayList<Imgc>();
+		for(int i = 0; i < allImages.length; i++){
+			boolean taken = false;
+			for(int j = 0; j< testImages.length; j++){
+				if(allImages[i]==testImages[j]){
+					taken = true;
+					break;
+				}
+			}
+			if(taken == false){
+				trainingImages.add(allImages[i]);
+			}
+		}
+		
+	
+		
+		boolean converges = false;
+		for (int i = 0; i < EPOCHS; i++) {
+			if (converges) {
+				break;
+			}
+			converges = epoch(perc, trainingImages);
+		}
+		
+		int right = 0;
+		int total = 0;
+		
+		for(Imgc image: testImages){
+			boolean approved = perc.approve(image);
+			if(image.getClassification().equals("Yes") == approved){	//If yes and approved or not yes and not approved
+				right++;
+			}
+			total++;
+		}
+		System.out.println("Cross validation "+right+"/"+total);
+		
+	}
 
-		for(int i = 0; i<15; i++){
-			int right = 0;
-			int total = 0;
+	public static boolean epoch(Perceptron perc, List<Imgc> images){
+
+		perc.train(images);
+		
+		int right = 0;
+		int total = 0;
+
 		for(Imgc image: images){
 			boolean approved = perc.approve(image);
-			if(image.getClass().equals("Yes") == approved){	//If yes and approved or not yes and not approved
-				//System.out.println("Correct");
+			if(image.getClassification().equals("Yes") == approved){	//If yes and approved or not yes and not approved
 				right++;
-			}else{
-				//System.out.println("Incorrect");
 			}
 			total++;
 		}
 		System.out.println(right+"/"+total);
-		
-		perc.train(images);	//Changes weights on perceptron depending on which images perc got right
-		//Todo do once per epoch
-		}
-
-
-
-
+	
+		if(right==total)
+			return true;
+		return false;
 	}
+	
+	
 
+	
 	public static List<Imgc> constructImageArrays(String filename) {
 		List<Imgc> arrays = new ArrayList<Imgc>();
 		try {
@@ -90,6 +167,8 @@ public class Main {
 		}
 		return arrays;
 	}
+	
+	
 
 
 
